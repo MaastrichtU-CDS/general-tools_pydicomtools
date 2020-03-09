@@ -25,7 +25,7 @@ class DicomCompare():
             if item.VR != "SQ":
                 # print(levelListStringNew)
                 ## Check value and VR
-                if item.value!=itemTarget.value:
+                if item.value!=itemTarget.value | item.VR!=itemTarget.VR | item.VM!=itemTarget.VM:
                     self.__diffTags.append(levelListStringNew)
             
             if item.VR=="SQ":
