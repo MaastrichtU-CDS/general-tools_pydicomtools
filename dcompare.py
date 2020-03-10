@@ -1,7 +1,8 @@
 from DiCompare import DicomCompare
+import sys
 
 dc = DicomCompare()
-dc.compareFiles('source.dcm', 'target.dcm')
+dc.compareFiles(sys.argv[1], sys.argv[2])
 
 for tagList in dc.getAllComparisons():
     tagListString = tagList.buildTagListRecursive()
