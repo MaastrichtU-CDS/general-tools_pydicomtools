@@ -25,7 +25,10 @@ class LinkedTagList():
         
         return stringListNew
     
-    def getLastItem(self, curItem):
+    def getLastItem(self, curItem=None):
+        if curItem is None:
+            curItem = self
+        
         if curItem.nextTagList is not None:
             return self.getLastItem(curItem.nextTagList)
         else:
