@@ -5,6 +5,7 @@
 * Python 3
 
 **Installation**:
+
 Run the following command: `pip install -r requirements.txt`
 
 ## How to run it?
