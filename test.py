@@ -4,6 +4,6 @@ dc = DicomCompare()
 dc.compareFiles('source.dcm', 'target.dcm')
 
 for tagList in dc.getAllComparisons():
-    print(tagList.buildTagListRecursive())
+    tagListString = tagList.buildTagListRecursive()
     lastItem = tagList.getLastItem()
-    print(lastItem.errorMessage)
+    print("%s | %s | \"%s\" | \"%s\"" % (tagListString, lastItem.errorMessage, lastItem.sourceVal, lastItem.targetVal))
