@@ -55,15 +55,20 @@ class DicomCompare():
     
     def __compareHeaderRecursive(self, headerSource, headerTarget, tagListItem = None, levelZero=True):
         for item in headerSource:
-            itemTarget = headerTarget[item.tag]
-
             if levelZero:
                 tagListItem = LinkedTagList()
                 self.__diffTags.append(tagListItem)
             tagListItem.tag = item.tag
             
+            ## Check if tag exists in target
+            if not item.tag in headerTarget:
+                tagListItem.errorMessage = "Tag does not exist in target"
+                tagListItem.sourceVal = item.value
+                continue
+
+            itemTarget = headerTarget[item.tag]
+
             if item.VR != "SQ":
-                # print(levelListStringNew)
                 ## Check value and VR
                 if item.value!=itemTarget.value:
                     tagListItem.errorMessage = "Value mismatch"
