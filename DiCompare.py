@@ -35,7 +35,8 @@ class LinkedTagList():
             return curItem
 
     def listContainsError(self):
-        return self.getLastItem(self).errorMessage is not None
+        lastItem = self.getLastItem()
+        return lastItem.errorMessage is not None
 
 
 class DicomCompare():
@@ -65,7 +66,7 @@ class DicomCompare():
                 # print(levelListStringNew)
                 ## Check value and VR
                 if item.value!=itemTarget.value:
-                    tagListItem.error = "Value mismatch"
+                    tagListItem.errorMessage = "Value mismatch"
                     tagListItem.sourceVal = item.value
                     tagListItem.targetVal = itemTarget.value
             
@@ -74,7 +75,7 @@ class DicomCompare():
                     tagListItem.itemIndex = i
                     newItem = LinkedTagList()
                     tagListItem.nextTagList = newItem
-                    self.__compareHeaderRecursive(subSet, itemTarget[i], newItem, levelZero=False)
+                    self.__compareHeaderRecursive(subSet, itemTarget.value[i], newItem, levelZero=False)
         
         if self.__onlyErrors:
             self.__subsetErrorOnly()
