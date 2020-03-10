@@ -18,7 +18,7 @@ class LinkedTagList():
             stringListNew += str(tagList.tag)
         
         if tagList.itemIndex is not None:
-            stringListNew += "[" + str(tagList.itemIndex) + "] "
+            stringListNew += "[" + str(tagList.itemIndex) + "]: "
         
         if tagList.nextTagList is not None:
             stringListNew = self.buildTagListRecursive(tagList.nextTagList, stringListNew)
@@ -36,8 +36,9 @@ class LinkedTagList():
 
 
 class DicomCompare():
-    def __init__(self):
+    def __init__(self, onlyErrors=True):
         self.__diffTags = list()
+        self.__onlyErrors = onlyErrors
     
     def compareFiles(self, filePathSource, filePathTarget):
         headerSource = pydicom.dcmread(filePathSource)
@@ -71,11 +72,14 @@ class DicomCompare():
                     newItem = LinkedTagList()
                     tagListItem.nextTagList = newItem
                     self.__compareHeaderRecursive(subSet, itemTarget[i], newItem, levelZero=False)
+        
+        if self.__onlyErrors:
+            self.__subsetErrorOnly()
     
     def getAllComparisons(self):
         return self.__diffTags
     
-    def subsetErrorOnly(self):
+    def __subsetErrorOnly(self):
         newDiffTags = list()
 
         for item in self.__diffTags:
